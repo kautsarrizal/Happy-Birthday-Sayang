@@ -14,11 +14,20 @@
             scroll-behavior: smooth;
         }
         body {
-            background: #0d1117;
-            color: white;
+            /* Background Terang, Meriah, dan Gembira (Animated Gradient) */
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            color: #2d3748;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow-x: hidden;
             text-align: center;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* Tanggal Ulang Tahun di Pojok Kiri Atas */
@@ -29,16 +38,17 @@
             z-index: 100;
             font-size: 14px;
             font-weight: bold;
-            color: #ff758c;
-            background: rgba(255, 255, 255, 0.1);
+            color: #d63384;
+            background: rgba(255, 255, 255, 0.85);
             padding: 8px 16px;
             border-radius: 20px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid #ff758c;
+            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.2);
             letter-spacing: 1px;
         }
 
-        /* Canvas Background untuk Kembang Api */
+        /* Canvas Background untuk Efek Kembang Api & Partikel Meriah */
         #bgCanvas {
             position: fixed;
             top: 0;
@@ -62,19 +72,19 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.9);
             padding: 35px 25px;
             border-radius: 24px;
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            max-width: 400px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            max-width: 420px;
             width: 100%;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 15px 35px rgba(255, 117, 140, 0.25);
         }
 
-        h1 { font-size: 26px; color: #ff4b72; margin-bottom: 12px; }
-        h2 { font-size: 20px; color: #ff758c; margin-bottom: 15px; }
-        p { font-size: 15px; color: #cbd5e1; line-height: 1.6; margin-bottom: 20px; }
+        h1 { font-size: 26px; color: #ff3366; margin-bottom: 12px; }
+        h2 { font-size: 22px; color: #e6005c; margin-bottom: 15px; }
+        p { font-size: 15px; color: #4a5568; line-height: 1.6; margin-bottom: 15px; }
 
         /* Seksi Kue & Lilin */
         .cake-container {
@@ -89,9 +99,9 @@
             bottom: 0;
             width: 100%;
             height: 80px;
-            background: #ff758c;
-            border-radius: 15px 15px 5px 5px;
-            box-shadow: inset 0 -10px 0 #ff4b72;
+            background: #ff6b81;
+            border-radius: 15px 15px 8px 8px;
+            box-shadow: inset 0 -10px 0 #ee5253;
         }
         .cake-body::before {
             content: '';
@@ -132,38 +142,60 @@
             100% { transform: translateX(-50%) scale(1.15) rotate(2deg); }
         }
 
-        /* Gallery Foto Grid */
+        /* Gallery Foto Grid Beranimasi */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 25px;
+            gap: 14px;
+            margin: 20px 0 25px;
         }
+        .img-wrapper {
+            overflow: hidden;
+            border-radius: 16px;
+            border: 3px solid #fff;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+            animation: float 4s ease-in-out infinite alternate;
+        }
+        /* Variasi arah animasi float tiap gambar */
+        .img-wrapper:nth-child(2n) {
+            animation-delay: 1s;
+        }
+        .img-wrapper:nth-child(3n) {
+            animation-delay: 2s;
+        }
+
         .gallery-img {
             width: 100%;
             height: 140px;
             object-fit: cover;
-            border-radius: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            transition: transform 0.3s ease;
+            display: block;
+            transition: transform 0.5s ease, filter 0.5s ease;
         }
-        .gallery-img:hover {
-            transform: scale(1.03);
+        .img-wrapper:hover .gallery-img {
+            transform: scale(1.15) rotate(2deg);
+            filter: brightness(1.05);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-8px); }
         }
 
         /* Indicator Scroll & Signature */
         .scroll-hint {
             margin-top: 15px;
             font-size: 13px;
-            color: #94a3b8;
+            color: #718096;
+            font-weight: 600;
             animation: bounce 2s infinite;
         }
         .signature {
             margin-top: 25px;
             font-size: 13px;
-            color: #ff758c;
+            color: #e6005c;
+            font-weight: bold;
             font-style: italic;
-            border-top: 1px dashed rgba(255, 255, 255, 0.2);
+            border-top: 2px dashed #fbcfe8;
             padding-top: 15px;
         }
 
@@ -194,7 +226,7 @@
                 <div class="cake-body"></div>
             </div>
 
-            <p id="wishText" style="font-weight: bold; color: #ff758c; min-height: 24px;"></p>
+            <p id="wishText" style="font-weight: bold; color: #e6005c; min-height: 24px;"></p>
             
             <div class="scroll-hint">Scroll kebawah untuk kejutan lagii sayang ⬇️</div>
         </div>
@@ -206,21 +238,30 @@
             <h2>Selamat Bertambah Usia! ❤️</h2>
             
             <p>
-                Semoga di usiamu yang baru ini, kamu selalu diberikan kesehatan, kebahagiaan, dan kemudahan dalam meraih semua cita-citamu. Makasih ya sudah hadir dan jadi bagian terindah di hidupku!.
+                Semoga di usiamu yang baru ini, kamu selalu diberikan kesehatan, kebahagiaan, dan kemudahan dalam meraih semua cita-citamu. Makasih ya sudah hadir dan jadi bagian terindah di hidupku!
             </p>
-            <p> (maaf telat yahh sayangg kadonya LOVEE❤️❤️❤️)
-            </p>   
+            <p style="font-weight: 600; color: #ff3366;"> 
+                (maaf telat yahh sayangg kadonya LOVEE❤️❤️❤️)
+            </p>    
 
-            <!-- Kumpulan Gallery Foto (Ganti nama file foto jika diperlukan) -->
+            <!-- Galeri Foto Animasi Interaktif -->
             <div class="gallery-grid">
-                <img src="foto.jpg" class="gallery-img" alt="Foto 1" onerror="this.src='https://via.placeholder.com/150?text=Foto+1'">
-                <img src="foto2.jpg" class="gallery-img" alt="Foto 2" onerror="this.src='https://via.placeholder.com/150?text=Foto+2'">
-                <img src="foto3.jpg" class="gallery-img" alt="Foto 3" onerror="this.src='https://via.placeholder.com/150?text=Foto+3'">
-                <img src="foto4.jpg" class="gallery-img" alt="Foto 4" onerror="this.src='https://via.placeholder.com/150?text=Foto+4'">
+                <div class="img-wrapper">
+                    <img src="foto.jpg" class="gallery-img" alt="Foto 1" onerror="this.src='https://via.placeholder.com/150/ffb6c1/ffffff?text=Foto+1'">
+                </div>
+                <div class="img-wrapper">
+                    <img src="foto2.jpg" class="gallery-img" alt="Foto 2" onerror="this.src='https://via.placeholder.com/150/ffc0cb/ffffff?text=Foto+2'">
+                </div>
+                <div class="img-wrapper">
+                    <img src="foto3.jpg" class="gallery-img" alt="Foto 3" onerror="this.src='https://via.placeholder.com/150/ffe4e1/ffffff?text=Foto+3'">
+                </div>
+                <div class="img-wrapper">
+                    <img src="foto4.jpg" class="gallery-img" alt="Foto 4" onerror="this.src='https://via.placeholder.com/150/ffb6c1/ffffff?text=Foto+4'">
+                </div>
             </div>
 
             <a href="https://wa.me/?text=Makasih%20banyak%20ya%20ucapan%20dan%20kejutannya!%20Sayang%20kamu%20bgt%20🥰" 
-               style="background: #ff4b72; color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: bold; text-decoration: none; display: inline-block; box-shadow: 0 4px 15px rgba(255,75,114,0.4);">
+               style="background: linear-gradient(45deg, #ff3366, #ff758c); color: white; border: none; padding: 12px 26px; border-radius: 25px; font-weight: bold; text-decoration: none; display: inline-block; box-shadow: 0 6px 20px rgba(255,51,102,0.35);">
                 Kirim Balasan Pesan 💌
             </a>
 
@@ -240,16 +281,16 @@
                 document.getElementById('wishText').innerText = "Permohonan terkirim! ✨🎉";
                 candleBlown = true;
                 
-                // Pemicu Efek Konfeti Besar
+                // Pemicu Efek Konfeti Besar Multi-Warna
                 confetti({
-                    particleCount: 120,
-                    spread: 70,
+                    particleCount: 150,
+                    spread: 80,
                     origin: { y: 0.6 }
                 });
             }
         }
 
-        // Background Partikel Bintang & Cahaya
+        // Background Partikel Berkilau & Bergerak
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -265,10 +306,11 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * 0.5 - 0.25;
-                this.color = `hsl(${Math.random() * 60 + 330}, 100%, 75%)`;
+                this.size = Math.random() * 4 + 2;
+                this.speedX = Math.random() * 0.8 - 0.4;
+                this.speedY = Math.random() * 0.8 - 0.4;
+                // Warna cerah pastel
+                this.color = `hsla(${Math.random() * 360}, 100%, 65%, 0.7)`;
             }
             update() {
                 this.x += this.speedX;
@@ -284,7 +326,7 @@
             }
         }
 
-        for (let i = 0; i < 60; i++) {
+        for (let i = 0; i < 70; i++) {
             particles.push(new Particle());
         }
 
