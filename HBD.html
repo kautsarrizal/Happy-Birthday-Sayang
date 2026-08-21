@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sayang! 🎉</title>
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        body {
+            background: #0d1117;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            text-align: center;
+        }
+
+        /* Canvas Background untuk Kembang Api */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Layout Section Scroll */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.07);
+            padding: 35px 25px;
+            border-radius: 24px;
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 380px;
+            width: 100%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 { font-size: 26px; color: #ff4b72; margin-bottom: 10px; }
+        h2 { font-size: 20px; color: #ff758c; margin-bottom: 15px; }
+        p { font-size: 15px; color: #cbd5e1; line-height: 1.6; margin-bottom: 20px; }
+
+        .photo-frame {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 3px solid white;
+            margin-bottom: 20px;
+        }
+
+        /* Seksi Kue & Lilin */
+        .cake-container {
+            position: relative;
+            width: 150px;
+            height: 120px;
+            margin: 20px auto 30px;
+            cursor: pointer;
+        }
+        .cake-body {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 80px;
+            background: #ff758c;
+            border-radius: 15px 15px 5px 5px;
+            box-shadow: inset 0 -10px 0 #ff4b72;
+        }
+        .cake-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 25px;
+            background: #fff;
+            border-radius: 15px 15px 10px 10px;
+        }
+        .candle {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 30px;
+            background: repeating-linear-gradient(45deg, #fff, #fff 5px, #ff4b72 5px, #ff4b72 10px);
+            border-radius: 3px;
+        }
+        .flame {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 20px;
+            background: #ffb703;
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 15px #ffb703, 0 0 25px #fb8500;
+            animation: flicker 0.6s infinite alternate;
+        }
+        .flame.off {
+            display: none;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-50%) scale(1.15) rotate(2deg); }
+        }
+
+        /* Indicator Scroll */
+        .scroll-hint {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #94a3b8;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas Efek Partikel Background -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- SECTION 1: KUE & LILIN -->
+    <section>
+        <div class="card">
+            <h1>Happy Birthday! 🎂</h1>
+            <p>Klik kue di bawah untuk meniup lilinnya dan buat permohonan!</p>
+            
+            <div class="cake-container" onclick="blowCandle()">
+                <div class="candle">
+                    <div class="flame" id="flame"></div>
+                </div>
+                <div class="cake-body"></div>
+            </div>
+
+            <p id="wishText" style="font-weight: bold; color: #ff758c; min-height: 24px;"></p>
+            
+            <div class="scroll-hint">Gulir ke bawah untuk kejutan ⬇️</div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: FOTO & UCAPAN -->
+    <section>
+        <div class="card">
+            <!-- Ganti dengan nama file foto kamu di repository GitHub -->
+            <img src="foto.jpg" class="photo-frame" alt="Foto Ulang Tahun" onerror="this.src='https://via.placeholder.com/300x240?text=Foto+Kita'">
+            
+            <h2>Selamat Bertambah Usia! ❤️</h2>
+            <p>
+                Semoga di usiamu yang baru ini, kamu selalu diberikan kesehatan, kebahagiaan, dan kemudahan dalam meraih semua cita-citamu. Makasih ya sudah hadir dan jadi bagian terindah di hidupku!
+            </p>
+            
+            <div class="scroll-hint">Masih ada lagi di bawah ⬇️</div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: PESAN AKHIR & WA -->
+    <section>
+        <div class="card">
+            <h1>Make A Wish 💫</h1>
+            <p>
+                Semoga semua doa dan harapanmu hari ini dikabulkan. Aku selalu ada buat mendukung kamu dalam kondisi apa pun!
+            </p>
+            
+            <a href="https://wa.me/?text=Makasih%20banyak%20ya%20ucapan%20dan%20kejutannya!%20Sayang%20kamu%20bgt%20🥰" 
+               style="background: #ff4b72; color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: bold; text-decoration: none; display: inline-block; box-shadow: 0 4px 15px rgba(255,75,114,0.4);">
+                Kirim Balasan Pesan 💌
+            </a>
+        </div>
+    </section>
+
+    <script>
+        // Animasi Tiuplilin & Kembang Api
+        let candleBlown = false;
+        function blowCandle() {
+            if (!candleBlown) {
+                document.getElementById('flame').classList.add('off');
+                document.getElementById('wishText').innerText = "Permohonan terkirim! ✨🎉";
+                candleBlown = true;
+                
+                // Pemicu Efek Konfeti Besar
+                confetti({
+                    particleCount: 120,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        // Background Partikel Bintang & Cahaya
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.color = `hsl(${Math.random() * 60 + 330}, 100%, 75%)`;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 60; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateBackground() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateBackground);
+        }
+        animateBackground();
+    </script>
+</body>
+</html>
